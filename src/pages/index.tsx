@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 
 import { api } from "~/utils/api";
 
@@ -20,7 +19,7 @@ export default function Home() {
           </h1>
           <p className="text-2xl text-white">
             {info.data ? info.data.map(info =>
-              <a href={info.url}>{info.name}</a>) : "Loading Resources..."}
+              <a href={info.url} key={info.id}>{info.name}</a>) : "Loading Resources..."}
           </p>
         </div>
       </main >
