@@ -1,4 +1,4 @@
 [
-  { "id": "1", "name": "Rodenbach Classic", "description": "A bland albiet enjoyable sour.  Notes of  cherry, vinegar, and apple; finishing with sour candy.", "rating": 3, "canImage": "/images/can1.png", "pouredImage": "/images/pour1.png", "brewery": "Rodenbach Brewery", "location": { "city": "Rodenbach", "country": "Beligum" }, "abv": 5.0, "style": "Belgian Sour Ale" },
-  { "id": "2", "name": "Beer Two", "description": "Another great beer.", "rating": 4.0, "canImage": "/images/2-can.jpg", "pouredImage": "/images/pour1.jpg", "brewery": "Brewery Two", "location": { "city": "City Two", "country": "Country Two" }, "abv": 4.5 }
+  { "id": "1", "name": "Rodenbach Classic", "description": "A bland albiet enjoyable sour.  Notes of  cherry, vinegar, and apple; finishing with sour candy.", "rating": 3, "canImage": "/images/can1.png", "pouredImage": "/images/pour1.png", "brewery": "Rodenbach Brewery", "location": { "city": "Rodenbach", "country": "Beligum" }, "abv": 5.0, "style": "Belgian Sour Ale" ,"timeReviewed": "2023-10-05T21:00:00Z"},
+  { "id": "2", "name": "Beer Two", "description": "Another great beer.", "rating": 4.0, "canImage": "/images/2-can.jpg", "pouredImage": "/images/pour1.jpg", "brewery": "Brewery Two", "location": { "city": "City Two", "country": "Country Two" }, "abv": 4.5, "timeReviewed": null }
 ]

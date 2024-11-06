@@ -20,6 +20,7 @@ interface Beer {
     location: Location;
     abv: number;
     style?: string;
+    timeReviewed: string | null;
 }
 
 interface BeerProps {
@@ -66,6 +67,7 @@ export default function BeerPage({ beer }: BeerProps) {
             <p className="mb-2">Location: {beer.location.city}, {beer.location.state ? `${beer.location.state}, ` : ''}{beer.location.country}</p>
             <p className="mb-2">ABV: {beer.abv}%</p>
             {beer.style && <p className="mb-2">Style: {beer.style}</p>}
+            {beer.timeReviewed && <p className="mb-2">Reviewed on: {new Date(beer.timeReviewed).toLocaleString()}</p>}
             <div className="flex space-x-4">
                 <img src={beer.canImage} alt={`${beer.name} can`} className="w-48 h-48 object-cover" />
                 <img src={beer.pouredImage} alt={`${beer.name} poured`} className="w-48 h-48 object-cover" />
