@@ -70,7 +70,6 @@ export default function BeerPage({ beer }: BeerProps) {
         </div>
     );
 }
-
 export const getStaticPaths: GetStaticPaths = async () => {
     const filePath = path.join(process.cwd(), 'beer.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
@@ -81,7 +80,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: { id: beer.id },
     }));
 
-    return { paths, fallback: true };
+    return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -90,6 +89,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const beers: Beer[] = JSON.parse(jsonData);
     const beer = beers.find((b) => b.id === params?.id) ?? null;
+
+    if (!beer) {
+        return {
+            notFound: true,
+        };
+    }
 
     return {
         props: {
