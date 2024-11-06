@@ -20,6 +20,7 @@ interface Beer {
     location: Location;
     abv: number;
     style?: string;
+    timeReviewed: string | null;
 }
 
 interface BeerProps {
@@ -49,10 +50,9 @@ export default function Beer({ beers }: BeerProps) {
 }
 
 export const getStaticProps = async () => {
-    const filePath = path.join(process.cwd(), 'beer.json');
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const beers: Beer[] = JSON.parse(jsonData);
-
+    const filePath = path.join(process.cwd(), 'beer.json'), jsonData = fs.readFileSync(filePath, 'utf-8'),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        beers: Beer[] = JSON.parse(jsonData);
     return {
         props: {
             beers,

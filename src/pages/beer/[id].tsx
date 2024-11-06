@@ -1,5 +1,7 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
 
@@ -24,20 +26,10 @@ interface Beer {
 }
 
 interface BeerProps {
-    beer: Beer | null;
+    beer: Beer;
 }
 
 export default function BeerPage({ beer }: BeerProps) {
-    const router = useRouter();
-
-    if (router.isFallback) {
-        return <div>Loading...</div>;
-    }
-
-    if (!beer) {
-        return <div>404 - Beer Not Found</div>;
-    }
-
     const renderStars = (rating: number) => {
         const stars = [];
         for (let i = 0; i < 5; i++) {
@@ -57,6 +49,9 @@ export default function BeerPage({ beer }: BeerProps) {
 
     return (
         <div className="max-w-4xl mx-auto p-4">
+            <Head>
+                <title>{beer.name}</title>
+            </Head>
             <h1 className="text-3xl font-bold mb-4">{beer.name}</h1>
             <p className="text-lg mb-2">{beer.description}</p>
             <div className="flex items-center mb-2">
@@ -69,8 +64,8 @@ export default function BeerPage({ beer }: BeerProps) {
             {beer.style && <p className="mb-2">Style: {beer.style}</p>}
             {beer.timeReviewed && <p className="mb-2">Reviewed on: {new Date(beer.timeReviewed).toLocaleString()}</p>}
             <div className="flex space-x-4">
-                <img src={beer.canImage} alt={`${beer.name} can`} className="w-48 h-48 object-cover" />
-                <img src={beer.pouredImage} alt={`${beer.name} poured`} className="w-48 h-48 object-cover" />
+                <Image src={beer.canImage} alt={`${beer.name} can`} width={192} height={192} className="object-cover" />
+                <Image src={beer.pouredImage} alt={`${beer.name} poured`} width={192} height={192} className="object-cover" />
             </div>
         </div>
     );
@@ -79,6 +74,7 @@ export default function BeerPage({ beer }: BeerProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
     const filePath = path.join(process.cwd(), 'beer.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const beers: Beer[] = JSON.parse(jsonData);
 
     const paths = beers.map((beer) => ({
@@ -88,18 +84,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return { paths, fallback: true };
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-    const { id } = context.params!;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
     const filePath = path.join(process.cwd(), 'beer.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const beers: Beer[] = JSON.parse(jsonData);
-
-    const beer = beers.find((beer) => beer.id === id) || null;
+    const beer = beers.find((b) => b.id === params?.id) ?? null;
 
     return {
         props: {
             beer,
         },
-        revalidate: 10,
     };
 };
