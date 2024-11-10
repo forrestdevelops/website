@@ -28,7 +28,23 @@
       "state": "Colorado",
       "country": "United States"
     },
-    "abv": 4.5,
+    "abv": 6.55,
     "timeReviewed": "2024-10-06T22:00"
+  },
+  {
+  "id": "3",
+  "name": "Bean Flicker Pumpkin Spice",
+    "description": "This beer was a great pumpkin beer.  The coffee was a great addition to the pumpkin and the spice was not overpowering.  The beer was pumpkin forward with a hint of cinnamon.  This beer left me wanting a christmas ale, which was an added bonus.",
+    "rating": 4.25,
+    "canImage": "/images/beer/can3.jpeg",
+    "pouredImage": "/images/beer/pour3.jpeg",
+    "brewery": "Odd Side Ales",
+    "location": {
+      "city": "Grand Haven",
+      "state": "Michigan",
+      "country": "United States"
+    },
+    "abv": 4.5,
+    "timeReviewed": "2024-10-09T19:00"
   }
 ]
