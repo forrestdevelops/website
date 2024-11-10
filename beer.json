@@ -1,4 +1,34 @@
 [
-  { "id": "1", "name": "Rodenbach Classic", "description": "A bland albiet enjoyable sour.  Notes of  cherry, vinegar, and apple; finishing with sour candy.", "rating": 3, "canImage": "/images/can1.png", "pouredImage": "/images/pour1.png", "brewery": "Rodenbach Brewery", "location": { "city": "Rodenbach", "country": "Beligum" }, "abv": 5.0, "style": "Belgian Sour Ale" ,"timeReviewed": "2023-10-05T21:00:00Z"},
-  { "id": "2", "name": "Beer Two", "description": "Another great beer.", "rating": 4.0, "canImage": "/images/2-can.jpg", "pouredImage": "/images/pour1.jpg", "brewery": "Brewery Two", "location": { "city": "City Two", "country": "Country Two" }, "abv": 4.5, "timeReviewed": null }
+  {
+    "id": "1",
+    "name": "Rodenbach Classic",
+    "description": "A bland albiet enjoyable sour.  Notes of  cherry, vinegar, and apple; finishing with sour candy.",
+    "rating": 3,
+    "canImage": "/images/can1.png",
+    "pouredImage": "/images/pour1.png",
+    "brewery": "Rodenbach Brewery",
+    "location": {
+      "city": "Rodenbach",
+      "country": "Beligum"
+    },
+    "abv": 5.0,
+    "style": "Belgian Sour Ale",
+    "timeReviewed": "2024-10-06T19:00"
+  },
+  {
+    "id": "2",
+    "name": "Voodoo Ranger Atomic Pumpkin",
+    "description": "This pumpkin beer could have been great; but the cinnamon was overpowering.  The pumpkin was lost in the mix and the handbarrow seemed to be an after note not caring any flavor or significant heat.",
+    "rating": 3.25,
+    "canImage": "/images/can2.jpeg",
+    "pouredImage": "/images/pour2.jpeg",
+    "brewery": "New Belgium Brewing Company",
+    "location": {
+      "city": "Fort Collins",
+      "state": "Colorado",
+      "country": "United States"
+    },
+    "abv": 4.5,
+    "timeReviewed": "2024-10-06T22:00"
+  }
 ]
