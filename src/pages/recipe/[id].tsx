@@ -62,6 +62,7 @@ export default function RecipePage({ recipe }: RecipeProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
     const filePath = path.join(process.cwd(), 'src/data/recipe.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const recipes: Recipe[] = JSON.parse(jsonData);
 
     const paths = recipes.map(recipe => ({
@@ -75,6 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const {id} = context.params!;
     const filePath = path.join(process.cwd(), 'src/data/recipe.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const recipes: Recipe[] = JSON.parse(jsonData);
     const recipe = recipes.find(recipe => recipe.id === id);
 
