@@ -62,7 +62,7 @@ export default function BeerPage({ beer }: BeerProps) {
 )
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-    const filePath = path.join(process.cwd(), 'beer.json');
+    const filePath = path.join(process.cwd(), 'src/data/beer.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const beers: Beer[] = JSON.parse(jsonData);
@@ -75,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const filePath = path.join(process.cwd(), 'beer.json');
+    const filePath = path.join(process.cwd(), 'src/data/beer.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const beers: Beer[] = JSON.parse(jsonData);

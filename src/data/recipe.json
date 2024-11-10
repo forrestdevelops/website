@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "name": "Vodka Rigatoni with garlic bread and broccoli raab",
+    "picture": "/images/recipe/recipe1.jpeg",
+    "description": "I cooked this dish for my family after a long day of playing top golf.  I cheated by getting fresh pasta and vodka sauce from Nicole Taylors Pasta and Market in Indianapolis(If you havent been there, put it on your list, its a great spot for italian groceries and food).  I made the garlic bread from scratch and the broccoli raab was from the farmers market.  I loved the combination of the vodka sauce with the bitter broccoli raab.  The garlic bread was a great addition to soak up the extra sauce; making it a perfect \"feel good\" meal. after golfing.",
+    "ingredients": [
+      "Rigatoni pasta",
+      "Garlic",
+      "Red chili flakes",
+      "Olive oil",
+      "Broccoli raab",
+      "Lemon juice",
+      "Salt",
+      "Vodka sauce",
+      "Garlic bread"
+    ],
+    "steps": [
+      "Preheat oven to 400 degrees F and boil salted water for pasta.",
+      "Place bread with garlic in oven for 10 minutes.",
+      "Cook pasta to al dente.",
+      "Saute garlic and red chili flakes in olive oil. Once fragrant, add broccoli raab.",
+      "Once seared, add water and cover to steam. Finish with lemon juice and salt.",
+      "Combine pasta with rigatoni and vodka sauce to combine.",
+      "Serve with garlic bread and broccoli raab."
+    ],
+    "timeCooked": "2024-10-09T19:00:00"
+  }
+]
