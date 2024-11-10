@@ -2,10 +2,10 @@
   {
     "id": "1",
     "name": "Rodenbach Classic",
-    "description": "A bland albiet enjoyable sour.  Notes of  cherry, vinegar, and apple; finishing with sour candy.",
+    "description": "A bland albeit enjoyable sour that had potential, untimely fell a bit flat.  Notes of cherry, vinegar, and apple; finishing with sour candy.  The beer was a bit thin and could have used a bit more body.",
     "rating": 3,
-    "canImage": "/images/can1.png",
-    "pouredImage": "/images/pour1.png",
+    "canImage": "/images/beer/can1.png",
+    "pouredImage": "/images/beer/pour1.png",
     "brewery": "Rodenbach Brewery",
     "location": {
       "city": "Rodenbach",
@@ -20,8 +20,8 @@
     "name": "Voodoo Ranger Atomic Pumpkin",
     "description": "This pumpkin beer could have been great; but the cinnamon was overpowering.  The pumpkin was lost in the mix and the handbarrow seemed to be an after note not caring any flavor or significant heat.",
     "rating": 3.25,
-    "canImage": "/images/can2.jpeg",
-    "pouredImage": "/images/pour2.jpeg",
+    "canImage": "/images/beer/can2.jpeg",
+    "pouredImage": "/images/beer/pour2.jpeg",
     "brewery": "New Belgium Brewing Company",
     "location": {
       "city": "Fort Collins",
