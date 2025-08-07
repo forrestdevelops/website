@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import ItemList from "~/components/itemList";
@@ -105,7 +104,7 @@ export default function Beer({ beers }: BeerProps) {
                 
                 <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
                     <h1 className="text-3xl font-bold mb-2 text-gray-900">Craft Beer Reviews</h1>
-                    <p className="text-gray-600 mb-6">Personal reviews and ratings of craft beers I've tried, featuring detailed tasting notes and photos</p>
+                    <p className="text-gray-600 mb-6">Personal reviews and ratings of craft beers I&apos;ve tried, featuring detailed tasting notes and photos</p>
                 </div>
                 
                 <ItemList items={beers} basePath="/beer" />

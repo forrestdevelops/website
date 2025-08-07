@@ -1,12 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const info = api.info.hello.useQuery();
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -68,7 +65,7 @@ export default function Home() {
               Welcome to my personal corner of the web
             </p>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              I'm a developer who loves craft beer and cooking. Here you'll find my personal beer reviews 
+              I&apos;m a developer who loves craft beer and cooking. Here you&apos;ll find my personal beer reviews 
               and favorite recipes from my kitchen adventures.
             </p>
           </div>

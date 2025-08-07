@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import ItemList from "~/components/itemList";

@@ -54,7 +54,7 @@ export default function BeerPage({ beer }: BeerProps) {
                 "@type": "Brand",
                 "name": beer.brewery
             },
-            "category": beer.style || "Craft Beer",
+            "category": beer.style ?? "Craft Beer",
             "description": beer.description
         },
         "image": `https://forrestdevelops.com${beer.pouredImage}`,
@@ -66,7 +66,7 @@ export default function BeerPage({ beer }: BeerProps) {
             <Head>
                 <title>{beer.name} by {beer.brewery} - Beer Review - Forrest Smietanski</title>
                 <meta name="description" content={`Review of ${beer.name} by ${beer.brewery}. Rating: ${beer.rating}/5 stars. ${beer.description.substring(0, 150)}...`} />
-                <meta name="keywords" content={`${beer.name}, ${beer.brewery}, craft beer, beer review, ${beer.style || 'beer'}, Forrest Smietanski`} />
+                <meta name="keywords" content={`${beer.name}, ${beer.brewery}, craft beer, beer review, ${beer.style ?? 'beer'}, Forrest Smietanski`} />
                 <meta name="author" content="Forrest Smietanski" />
                 
                 {/* Open Graph / Facebook */}
