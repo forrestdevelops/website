@@ -34,14 +34,14 @@ export default function Home() {
         <meta property="og:url" content="https://forrestdevelops.com/" />
         <meta property="og:title" content="Forrest Smietanski - Developer, Beer Enthusiast & Food Lover" />
         <meta property="og:description" content="Personal website featuring beer reviews and recipes from a developer who loves craft beer and cooking." />
-        <meta property="og:image" content="https://forrestdevelops.com/og-image.jpg" />
+        <meta property="og:image" content="https://forrestdevelops.com/og-image.svg" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://forrestdevelops.com/" />
         <meta property="twitter:title" content="Forrest Smietanski - Developer, Beer Enthusiast & Food Lover" />
         <meta property="twitter:description" content="Personal website featuring beer reviews and recipes from a developer who loves craft beer and cooking." />
-        <meta property="twitter:image" content="https://forrestdevelops.com/og-image.jpg" />
+        <meta property="twitter:image" content="https://forrestdevelops.com/og-image.svg" />
         
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://forrestdevelops.com/" />

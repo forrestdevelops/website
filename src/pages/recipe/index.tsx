@@ -54,14 +54,14 @@ export default function Recipe({ recipes }: RecipeProps) {
                 <meta property="og:url" content="https://forrestdevelops.com/recipe" />
                 <meta property="og:title" content="Recipes & Cooking - Forrest Smietanski" />
                 <meta property="og:description" content="Personal recipes and cooking adventures with step-by-step instructions and photos." />
-                <meta property="og:image" content="https://forrestdevelops.com/og-image.jpg" />
-                
-                {/* Twitter */}
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content="https://forrestdevelops.com/recipe" />
-                <meta property="twitter:title" content="Recipes & Cooking - Forrest Smietanski" />
-                <meta property="twitter:description" content="Personal recipes and cooking adventures with step-by-step instructions and photos." />
-                <meta property="twitter:image" content="https://forrestdevelops.com/og-image.jpg" />
+                        <meta property="og:image" content="https://forrestdevelops.com/og-image.svg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://forrestdevelops.com/recipe" />
+        <meta property="twitter:title" content="Recipes & Cooking - Forrest Smietanski" />
+        <meta property="twitter:description" content="Personal recipes and cooking adventures with step-by-step instructions and photos." />
+        <meta property="twitter:image" content="https://forrestdevelops.com/og-image.svg" />
                 
                 <link rel="canonical" href="https://forrestdevelops.com/recipe" />
                 

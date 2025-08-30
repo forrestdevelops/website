@@ -77,14 +77,14 @@ export default function Beer({ beers }: BeerProps) {
                 <meta property="og:url" content="https://forrestdevelops.com/beer" />
                 <meta property="og:title" content="Craft Beer Reviews - Forrest Smietanski" />
                 <meta property="og:description" content="Personal craft beer reviews and ratings with detailed tasting notes and photos." />
-                <meta property="og:image" content="https://forrestdevelops.com/og-image.jpg" />
-                
-                {/* Twitter */}
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content="https://forrestdevelops.com/beer" />
-                <meta property="twitter:title" content="Craft Beer Reviews - Forrest Smietanski" />
-                <meta property="twitter:description" content="Personal craft beer reviews and ratings with detailed tasting notes and photos." />
-                <meta property="twitter:image" content="https://forrestdevelops.com/og-image.jpg" />
+                        <meta property="og:image" content="https://forrestdevelops.com/og-image.svg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://forrestdevelops.com/beer" />
+        <meta property="twitter:title" content="Craft Beer Reviews - Forrest Smietanski" />
+        <meta property="twitter:description" content="Personal craft beer reviews and ratings with detailed tasting notes and photos." />
+        <meta property="twitter:image" content="https://forrestdevelops.com/og-image.svg" />
                 
                 <link rel="canonical" href="https://forrestdevelops.com/beer" />
                 

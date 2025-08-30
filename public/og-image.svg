@@ -1,0 +1,68 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#374151;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="80" fill="url(#accent)" opacity="0.1"/>
+  <circle cx="1100" cy="530" r="120" fill="url(#accent)" opacity="0.1"/>
+  <circle cx="1000" cy="150" r="60" fill="url(#accent)" opacity="0.1"/>
+  
+  <!-- Main content area -->
+  <rect x="100" y="150" width="1000" height="330" rx="20" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- Name -->
+  <text x="600" y="250" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#1f2937">
+    Forrest Smietanski
+  </text>
+  
+  <!-- Title -->
+  <text x="600" y="300" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#6b7280">
+    Developer • Beer Enthusiast • Food Lover
+  </text>
+  
+  <!-- Icons -->
+  <!-- Code icon -->
+  <g transform="translate(400, 350)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#f59e0b"/>
+    <text x="20" y="26" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white">{ }</text>
+  </g>
+  
+  <!-- Beer icon -->
+  <g transform="translate(500, 350)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#10b981"/>
+    <path d="M8 8h24v24H8z" fill="none"/>
+    <path d="M12 12h16v16H12z" fill="none" stroke="white" stroke-width="2"/>
+    <path d="M16 16h8v8h-8z" fill="white"/>
+  </g>
+  
+  <!-- Food icon -->
+  <g transform="translate(600, 350)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#8b5cf6"/>
+    <path d="M20 12c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="white"/>
+  </g>
+  
+  <!-- Labels -->
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6b7280">Developer</text>
+  <text x="500" y="420" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6b7280">Beer</text>
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6b7280">Food</text>
+  
+  <!-- Website URL -->
+  <text x="600" y="480" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#9ca3af">
+    forrestdevelops.com
+  </text>
+  
+  <!-- Accent line -->
+  <line x1="200" y1="200" x2="1000" y2="200" stroke="url(#accent)" stroke-width="3" opacity="0.7"/>
+</svg>
