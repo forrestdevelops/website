@@ -7,6 +7,8 @@ export interface Product {
   category: Category;
   kind: ProductKind;
   description: string;
+  /** Optional deep link to this product on the StampedDesigner store. Falls back to the store URL. */
+  url?: string;
   /** Price in cents; null until pricing is set. */
   priceCents: number | null;
   image: string;
@@ -103,5 +105,5 @@ export const products: Product[] = [
   },
 ];
 
-export const formatPrice = (cents: number | null): string =>
-  cents === null ? "[PRICE]" : `$${(cents / 100).toFixed(2)}`;
+export const formatPrice = (cents: number | null): string | null =>
+  cents === null ? null : `$${(cents / 100).toFixed(2)}`;

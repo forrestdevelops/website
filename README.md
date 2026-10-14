@@ -60,10 +60,24 @@ Copy `.env.example` to `.env` (or set env vars in your host):
 
 ## To do
 
-Placeholders still to fill in: GitHub handle, channel link, first post title, product prices, and store policies (shipping/returns/sizing).
+Placeholders still to fill in: channel links once videos publish.
 
 ## Deploying to Vercel
 
 `vercel.json` pins the framework to **Express** (overriding any old Next.js preset in project settings) and runs `npm run build`.
 On Vercel the app is exported as a function (`export default app` in `src/server.ts`); files in `public/` are served from the CDN.
 Set `SITE_URL` in the Vercel project's environment variables once the domain is live (otherwise the production `*.vercel.app` URL is used).
+
+## Store (Stamped plugin)
+
+`/store` sells the **forrest-develops** store from StampedDesigner through `src/plugins/stamped/`, the same model as Stamped's WordPress plugin:
+
+- `public/vendor/stamped/pd-sdk.iife.js` (SDK, `window.ProductDesigner`) and `product-designer.js` (defines `<brand-store>`)
+- the page renders `<brand-store store="forrest-develops" brand="forrestdevelops">`; the SDK's `loadDesigner()` loads the bundle
+- products come from the Stamped hub; Add to cart / Checkout hand off to stampedpromo.com
+
+Go live by setting `STAMPED_API_KEY` (publishable `pk_` key from WordPress → Settings → Product Designer API) in `.env` locally and in Vercel. Without it, `/store` shows the preview grid.
+
+Before orders work from this domain, in StampedDesigner add the site's origin (e.g. `https://forrestdevelops.com`, plus `http://localhost:3000` for dev) to the S3 bucket's `allowed_origins` (`infra/terraform/variables.tf`, then `terraform apply`), and to the key's storefront `origins` if the key is origin-locked.
+
+Updating the bundles: rebuild in StampedDesigner (`pnpm run wp:zip`) and copy `apps/designer/dist/product-designer.js` and `packages/sdk/dist/pd-sdk.iife.js` into `public/vendor/stamped/`.

@@ -1,7 +1,22 @@
 import { html, raw } from "../lib/html.js";
-import { categories, formatPrice, products, type Product } from "../data/products.js";
+import { categories, products, type Product } from "../data/products.js";
+import { stamped, brandStoreElement, stampedScripts } from "../plugins/stamped/index.js";
 import { layout } from "./layout.js";
-import { icons } from "./icons.js";
+
+/* ---------- Live: the Stamped plugin's <brand-store> ---------- */
+
+function brandStore() {
+  return html`
+<section aria-label="Shop" class="wrap shop">
+  <div class="shop-frame">
+    ${brandStoreElement()}
+    <noscript><p class="muted">The store needs JavaScript. You can also shop at <a href="${stamped.shopUrl}">${stamped.shopHost}</a>.</p></noscript>
+  </div>
+  <p class="shop-error mono small" data-store-error hidden>The store couldn't load right now. Try refreshing, or visit <a href="${stamped.shopUrl}">${stamped.shopHost}</a>.</p>
+</section>`;
+}
+
+/* ---------- Not live yet: preview of the first drop ---------- */
 
 function productArt(p: Product) {
   if (p.kind === "tee") {
@@ -15,7 +30,7 @@ function productArt(p: Product) {
   return "";
 }
 
-function productCard(p: Product) {
+function previewCard(p: Product) {
   return html`
   <article class="product" data-category="${p.category}">
     <div class="product-tile" style="background:${p.tile}">
@@ -26,54 +41,57 @@ function productCard(p: Product) {
       <p class="product-cat mono">${p.category}</p>
       <h2>${p.name}</h2>
       <p class="muted small">${p.description}</p>
-      <div class="product-foot">
-        <span class="mono price">${formatPrice(p.priceCents)}</span>
-        <button type="button" class="btn btn-primary btn-sm" data-add="${p.id}">Add to cart</button>
-      </div>
+      <div class="product-foot"><span class="status mono">opening soon</span></div>
     </div>
   </article>`;
 }
 
-export function storePage(): string {
-  const cartButton = html`
-    <button type="button" class="cart-btn mono" aria-label="Cart, 0 items" data-cart>
-      ${icons.cart}<span>cart</span><span class="cart-count" data-cart-count>0</span>
-    </button>`;
-
-  const body = html`
-<section class="wrap store-hero">
-  <p class="eyebrow mono">$ ls ./store</p>
-  <h1 class="store-title">The Store</h1>
-  <p class="hero-lede">Shirts, stickers and desk gear for people who keep the lights on. Opening soon. These are previews of the first drop.</p>
-</section>
-
-<section aria-label="Products" class="wrap products">
+function preview() {
+  return html`
+<section aria-label="Preview" class="wrap products">
   <div role="group" aria-label="Filter by category" class="filters">
     ${categories.map(
       (c, i) =>
         html`<button type="button" class="pill mono" data-filter="${c}" aria-pressed="${i === 0 ? "true" : "false"}">${c}</button>`,
     )}
   </div>
-  <div class="product-grid">
-    ${products.map(productCard)}
-  </div>
+  <div class="product-grid">${products.map(previewCard)}</div>
+</section>`;
+}
+
+/* ---------- Page ---------- */
+
+export function storePage(): string {
+  const live = stamped.live;
+  const host = stamped.shopHost;
+
+  const body = html`
+<section class="wrap store-hero">
+  <p class="eyebrow mono">$ ls ./store</p>
+  <h1 class="store-title">The Store</h1>
+  <p class="hero-lede">${live
+    ? html`Gear for people who keep the lights on. Pick a product, choose your color and size, and add a name if you want. Every piece is printed or embroidered to order by ${stamped.name}.`
+    : html`Shirts, stickers and desk gear for people who keep the lights on. Opening soon. These are previews of the first drop.`}</p>
 </section>
+
+${live ? brandStore() : preview()}
 
 <section aria-label="Store info" class="band">
   <div class="wrap info-grid">
-    <div><p class="eyebrow mono">shipping</p><p class="muted">[SHIPPING POLICY — regions, timing, cost]</p></div>
-    <div><p class="eyebrow mono">returns</p><p class="muted">[RETURN POLICY]</p></div>
-    <div><p class="eyebrow mono">sizing</p><p class="muted">[SIZE CHART LINK]</p></div>
+    <div><p class="eyebrow mono">checkout</p><p class="muted">Secure checkout is handled by ${stamped.name} at ${host}. Your cart carries over when you check out.</p></div>
+    <div><p class="eyebrow mono">made to order</p><p class="muted">Items are decorated when you order, then shipped by ${stamped.name}. See ${host} for shipping and return policies.</p></div>
+    <div><p class="eyebrow mono">sizing</p><p class="muted">Sizes and colors for each product are shown in the store as you build your order.</p></div>
   </div>
 </section>`;
 
   return layout({
     title: "Store",
-    description: "Shirts, stickers and desk gear from forrestdevelops. Opening soon.",
+    description: "forrestdevelops gear: apparel printed and embroidered to order by Stamped.",
     path: "/store",
     active: "store",
     body,
-    headerExtra: cartButton,
+    headerExtra: live ? html`<a class="nav-cta" href="${stamped.cartUrl}">Cart ↗</a>` : undefined,
+    classicScripts: stampedScripts(),
     scripts: ["/js/store.js"],
   });
 }

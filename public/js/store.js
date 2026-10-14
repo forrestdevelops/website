@@ -1,37 +1,3 @@
-"use strict";
-// Store page interactivity: category filter + local cart counter.
-const CART_KEY = "fd-cart";
-function loadCart() {
-    try {
-        const raw = localStorage.getItem(CART_KEY);
-        return raw ? JSON.parse(raw) : {};
-    }
-    catch {
-        return {};
-    }
-}
-function saveCart(cart) {
-    try {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    }
-    catch {
-        /* storage unavailable: keep in memory */
-    }
-}
-let cart = loadCart();
-function renderCart() {
-    const total = Object.values(cart).reduce((a, b) => a + b, 0);
-    const count = document.querySelector("[data-cart-count]");
-    const btn = document.querySelector("[data-cart]");
-    if (count)
-        count.textContent = String(total);
-    if (btn)
-        btn.setAttribute("aria-label", `Cart, ${total} item${total === 1 ? "" : "s"}`);
-    document.querySelectorAll("[data-add]").forEach((b) => {
-        const n = cart[b.dataset.add ?? ""] ?? 0;
-        b.textContent = n ? `Added (${n})` : "Add to cart";
-    });
-}
 function applyFilter(category) {
     document.querySelectorAll("[data-filter]").forEach((b) => {
         b.setAttribute("aria-pressed", String(b.dataset.filter === category));
@@ -41,18 +7,55 @@ function applyFilter(category) {
     });
 }
 document.addEventListener("click", (e) => {
-    const target = e.target;
-    const filterBtn = target.closest("[data-filter]");
-    if (filterBtn?.dataset.filter) {
-        applyFilter(filterBtn.dataset.filter);
-        return;
-    }
-    const addBtn = target.closest("[data-add]");
-    if (addBtn?.dataset.add) {
-        const id = addBtn.dataset.add;
-        cart = { ...cart, [id]: (cart[id] ?? 0) + 1 };
-        saveCart(cart);
-        renderCart();
-    }
+    const btn = e.target.closest("[data-filter]");
+    if (btn?.dataset.filter)
+        applyFilter(btn.dataset.filter);
 });
-renderCart();
+const storeEl = document.querySelector("brand-store[data-stamped]");
+if (storeEl) {
+    const showError = (err) => {
+        console.warn("[stamped] store failed to load", err);
+        document.querySelector("[data-store-error]")?.removeAttribute("hidden");
+    };
+    const scriptUrl = storeEl.dataset.scriptUrl ?? "";
+    // The SDK's loader injects the designer bundle once and resolves when the elements are defined.
+    if (window.ProductDesigner && scriptUrl) {
+        window.ProductDesigner.loadDesigner({ scriptUrl, timeoutMs: 20000 }).catch(showError);
+    }
+    else {
+        showError(new Error("Stamped SDK not loaded"));
+    }
+    document.addEventListener("pd:error", (e) => console.warn("[stamped] brand-store error", e.detail));
+    // Add to cart goes straight to the stampedpromo.com cart. The store keeps added designs in a
+    // per-tab "bag" (sessionStorage); hand all of them to Stamped's checkout link, which adds them to the
+    // WooCommerce cart (skipping any already there), then empty the bag so they aren't sent twice.
+    const shopUrl = (storeEl.dataset.shopUrl ?? "").replace(/\/+$/, "");
+    const storeId = storeEl.getAttribute("store") ?? "";
+    const bagKey = `pd-brand-store:${storeId}:bag`;
+    const readBag = () => {
+        try {
+            const v = JSON.parse(sessionStorage.getItem(bagKey) ?? "[]");
+            return Array.isArray(v) ? v.filter((x) => typeof x === "string") : [];
+        }
+        catch {
+            return [];
+        }
+    };
+    storeEl.addEventListener("pd:add-to-cart", (e) => {
+        const designId = e.detail?.designId;
+        if (!shopUrl || !designId)
+            return;
+        // Let the store record the design first (it updates the bag right after this event).
+        window.setTimeout(() => {
+            const ids = [...new Set([...readBag(), designId])].slice(0, 20);
+            try {
+                sessionStorage.setItem(bagKey, "[]");
+            }
+            catch {
+                /* storage unavailable */
+            }
+            window.location.href = `${shopUrl}/?pd_checkout=${ids.map(encodeURIComponent).join(",")}&pd_to=cart`;
+        }, 0);
+    });
+}
+export {};

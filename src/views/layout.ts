@@ -10,6 +10,8 @@ interface LayoutOptions {
   body: SafeHtml;
   headerExtra?: SafeHtml;
   scripts?: string[];
+  /** Classic (non-module) scripts, loaded with defer before module scripts run. */
+  classicScripts?: string[];
 }
 
 export function layout(o: LayoutOptions): string {
@@ -70,6 +72,7 @@ ${o.body}
     </div>
   </div>
 </footer>
+${(o.classicScripts ?? []).map((s) => html`<script defer src="${s}"></script>`)}
 ${(o.scripts ?? []).map((s) => html`<script type="module" src="${s}"></script>`)}
 </body>
 </html>`.value
