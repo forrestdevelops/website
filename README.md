@@ -1,28 +1,69 @@
-# Create T3 App
+# forrestdevelops
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+The forrestdevelops website — a small TypeScript + Node app (Express, server-rendered HTML, no front-end framework).
 
-## What's next? How do I make an app with this?
+## Stack
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Node 20+ / TypeScript** (strict, ESM)
+- **Express** for routing, with `helmet` (security headers + CSP) and `compression`
+- **Server-rendered views** written as typed template functions (`src/views/*.ts`) using a tiny auto-escaping `html` tag (`src/lib/html.ts`)
+- **Client TS** for the store's filter/cart (`src/client/store.ts` → `public/js/store.js`)
+- Plain CSS with design tokens (`public/css/site.css`) — IBM Plex Sans/Mono, dark theme, amber accent
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+```bash
+npm install
+npm run dev        # http://localhost:3000 — server reloads on change, client TS rebuilds
+```
 
-## Learn More
+Production:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```bash
+npm run build      # compiles server → dist/, client → public/js/
+npm start          # NODE_ENV=production node dist/server.js
+```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Routes
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+| Route | What |
+| --- | --- |
+| `/` | Home: hero, blog + channel, about, store teaser |
+| `/store` | Store preview with category filter and cart counter |
+| `/api/products` | Product catalog as JSON |
+| `/healthz` | Health check |
+| `/sitemap.xml` | Generated from the route list + `SITE_URL` |
 
-## How do I deploy this?
+## Layout
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```
+src/
+  server.ts          Express app + routes
+  config.ts          env config (PORT, HOST, SITE_URL)
+  lib/html.ts        auto-escaping html`` template tag
+  data/site.ts       site copy, links, nav  ← fill in [PLACEHOLDERS]
+  data/products.ts   store catalog          ← set priceCents
+  views/             layout + page templates
+  client/store.ts    browser script for /store
+public/
+  css/site.css
+  images/brand/      mark, prompt, sticker, wordmark SVGs
+```
+
+## Config
+
+Copy `.env.example` to `.env` (or set env vars in your host):
+
+- `PORT` (default `3000`)
+- `HOST` (default `0.0.0.0`)
+- `SITE_URL` — canonical URL used for meta tags and the sitemap
+
+## To do
+
+Placeholders still to fill in: GitHub handle, channel link, first post title, product prices, and store policies (shipping/returns/sizing).
+
+## Deploying to Vercel
+
+`vercel.json` pins the framework to **Express** (overriding any old Next.js preset in project settings) and runs `npm run build`.
+On Vercel the app is exported as a function (`export default app` in `src/server.ts`); files in `public/` are served from the CDN.
+Set `SITE_URL` in the Vercel project's environment variables once the domain is live (otherwise the production `*.vercel.app` URL is used).
