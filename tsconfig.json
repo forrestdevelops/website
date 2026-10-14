@@ -12,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true
   },
-  "include": ["src/server.ts", "src/config.ts", "src/lib/**/*.ts", "src/views/**/*.ts", "src/data/**/*.ts"]
+  "include": ["src/server.ts", "src/config.ts", "src/lib/**/*.ts", "src/views/**/*.ts", "src/data/**/*.ts", "src/plugins/**/*.ts"]
 }

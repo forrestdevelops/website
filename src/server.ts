@@ -3,6 +3,9 @@ import compression from "compression";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { config } from "./config.js";
+import { defaultCsp } from "./lib/csp.js";
+import { stampedCsp } from "./plugins/stamped/index.js";
+import { getStoreProducts } from "./plugins/stamped/catalog.js";
 import { homePage } from "./views/home.js";
 import { storePage } from "./views/store.js";
 import { notFoundPage } from "./views/notFound.js";
@@ -18,23 +21,9 @@ const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", true);
 
-// Security headers (CSP etc). Upgrade/HSTS only in production: Safari applies them to http://localhost too.
-const csp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "font-src 'self' https://fonts.gstatic.com",
-  "form-action 'self'",
-  "frame-ancestors 'self'",
-  "img-src 'self' data:",
-  "object-src 'none'",
-  "script-src 'self'",
-  "script-src-attr 'none'",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  ...(config.isProd ? ["upgrade-insecure-requests"] : []),
-].join("; ");
-
+// Security headers. HSTS only in production (Safari applies it to http://localhost too).
 app.use((_req, res, next) => {
-  res.setHeader("Content-Security-Policy", csp);
+  res.setHeader("Content-Security-Policy", defaultCsp);
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "SAMEORIGIN");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -48,8 +37,14 @@ const send = (render: () => string) => (_req: express.Request, res: express.Resp
   res.type("html").send(render());
 };
 
-app.get("/", send(homePage));
-app.get("/store", send(storePage));
+app.get("/", async (_req, res, next) => {
+  try {
+    res.type("html").send(homePage(await getStoreProducts()));
+  } catch (err) {
+    next(err);
+  }
+});
+app.get("/store", stampedCsp, send(storePage));
 app.get("/blog", send(blogIndexPage));
 app.get("/blog/:slug", (req, res, next) => {
   const post = getPost(req.params.slug);

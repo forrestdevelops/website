@@ -2,16 +2,26 @@ import { html } from "../lib/html.js";
 import { site } from "../data/site.js";
 import { formatDate, posts } from "../data/posts.js";
 import { videos } from "../data/videos.js";
+import { stamped } from "../plugins/stamped/index.js";
+import type { StoreProduct } from "../plugins/stamped/catalog.js";
 import { layout } from "./layout.js";
 import { icons } from "./icons.js";
 
-const placeholderProduct = html`
-  <div class="placeholder-card">
-    <div class="placeholder-img mono">[PRODUCT IMAGE]</div>
-    <div class="placeholder-row"><span>[PRODUCT NAME]</span><span class="mono muted">[PRICE]</span></div>
-  </div>`;
+function storeCard(p: StoreProduct) {
+  return html`
+      <a class="merch-card" href="/store">
+        <div class="merch-img">
+          ${p.image ? html`<img class="merch-photo" src="${p.image}" alt="" loading="lazy">` : ""}
+          <img class="merch-badge" src="/images/brand/sticker.svg" alt="" loading="lazy">
+        </div>
+        <div class="merch-body">
+          <span class="merch-name">${p.name}</span>
+          <span class="merch-meta mono">${p.priceFrom ? `from ${p.priceFrom}` : ""}${p.color ? html` · ${p.color}` : ""}</span>
+        </div>
+      </a>`;
+}
 
-export function homePage(): string {
+export function homePage(storeProducts: StoreProduct[] = []): string {
   const latest = posts[0];
   const nextVideo = videos[0];
   const body = html`
@@ -68,15 +78,12 @@ export function homePage(): string {
     <div class="store-teaser-head">
       <div class="stack">
         <p class="eyebrow mono">04 / store</p>
-        <h2 class="section-title">Store — coming soon</h2>
-        <p class="muted">Gear, merch and downloads are on the way.</p>
-        <a class="btn btn-primary btn-sm" href="/store">Preview the store →</a>
+        <h2 class="section-title">${stamped.live ? "The store" : "Store — coming soon"}</h2>
+        <p class="muted">${stamped.live ? "Made to order and branded with the f/d_ badge. Add your name if you want." : "Gear, merch and downloads are on the way."}</p>
       </div>
-      <span class="status mono">status: under construction</span>
+      ${stamped.live ? html`<a class="btn btn-ghost btn-sm" href="/store">Shop all →</a>` : ""}
     </div>
-    <div class="placeholder-grid">
-      ${placeholderProduct}${placeholderProduct}${placeholderProduct}
-    </div>
+    ${storeProducts.length ? html`<div class="merch-grid">${storeProducts.map(storeCard)}</div>` : ""}
   </div>
 </section>`;
 

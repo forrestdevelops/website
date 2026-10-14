@@ -1,3 +1,10 @@
+// Load .env for local dev (Node 20.12+). Hosts like Vercel inject env vars directly.
+try {
+  process.loadEnvFile();
+} catch {
+  /* no .env file: fine */
+}
+
 export const config = {
   port: Number(process.env.PORT ?? 3000),
   host: process.env.HOST ?? "0.0.0.0",
