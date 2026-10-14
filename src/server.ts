@@ -1,6 +1,5 @@
 import express from "express";
 import compression from "compression";
-import helmet from "helmet";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { config } from "./config.js";
@@ -19,23 +18,30 @@ const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", true);
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:"],
-        scriptSrc: ["'self'"],
-        // Safari applies this to http://localhost too, which breaks every asset in dev.
-        upgradeInsecureRequests: config.isProd ? [] : null,
-      },
-    },
-    // HSTS only makes sense behind real HTTPS.
-    strictTransportSecurity: config.isProd,
-  }),
-);
+// Security headers (CSP etc). Upgrade/HSTS only in production: Safari applies them to http://localhost too.
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "font-src 'self' https://fonts.gstatic.com",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  "img-src 'self' data:",
+  "object-src 'none'",
+  "script-src 'self'",
+  "script-src-attr 'none'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  ...(config.isProd ? ["upgrade-insecure-requests"] : []),
+].join("; ");
+
+app.use((_req, res, next) => {
+  res.setHeader("Content-Security-Policy", csp);
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  if (config.isProd) res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  next();
+});
 app.use(compression());
 
 const send = (render: () => string) => (_req: express.Request, res: express.Response) => {
@@ -81,6 +87,11 @@ app.use((req, res) => {
   res.status(404).type("html").send(notFoundPage(req.path));
 });
 
-app.listen(config.port, config.host, () => {
-  console.log(`forrestdevelops listening on http://localhost:${config.port}`);
-});
+// On Vercel the app runs as a function (default export); locally/Docker we listen on a port.
+if (!process.env.VERCEL) {
+  app.listen(config.port, config.host, () => {
+    console.log(`forrestdevelops listening on http://localhost:${config.port}`);
+  });
+}
+
+export default app;

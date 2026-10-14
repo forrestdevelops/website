@@ -61,3 +61,9 @@ Copy `.env.example` to `.env` (or set env vars in your host):
 ## To do
 
 Placeholders still to fill in: GitHub handle, channel link, first post title, product prices, and store policies (shipping/returns/sizing).
+
+## Deploying to Vercel
+
+`vercel.json` pins the framework to **Express** (overriding any old Next.js preset in project settings) and runs `npm run build`.
+On Vercel the app is exported as a function (`export default app` in `src/server.ts`); files in `public/` are served from the CDN.
+Set `SITE_URL` in the Vercel project's environment variables once the domain is live (otherwise the production `*.vercel.app` URL is used).
